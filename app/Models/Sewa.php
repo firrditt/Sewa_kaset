@@ -38,7 +38,7 @@ class Sewa extends Model
     /**
      * Sewa belongs to kaset
      *
-     * @return  HasMany
+     * @return  BelongsTo
      */
     public function kaset(): BelongsTo
     {
