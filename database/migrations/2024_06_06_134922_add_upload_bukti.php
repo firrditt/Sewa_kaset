@@ -11,14 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kaset', function (Blueprint $table) {
-            $table->id();
-            $table->string('jdl_kaset');
-            $table->string('thn_kaset');
-            $table->integer('harga');
-            $table->string('status_kaset');
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('sewa', function (Blueprint $table) {
+            $table->text('upload')->nullable();
         });
     }
 
@@ -27,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kaset');
+        Schema::table('sewa', function (Blueprint $table) {
+            $table->dropColumn('upload');
+        });
     }
 };

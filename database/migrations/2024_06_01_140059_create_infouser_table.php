@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('infouser', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('firstname', 50);
-            $table->string('lastname', 50)->nullable();
+            $table->string('nama');
             $table->string('alamat', 100);
             $table->string('no_telp', 20);
             $table->string('jns_kelamin', 10);
@@ -26,7 +25,6 @@ return new class extends Migration
                   ->references('id')->on('users')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
-
         });
     }
 

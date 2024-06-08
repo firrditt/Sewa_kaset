@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('sewa', function (Blueprint $table) {
             $table->id();
-            $table->integer('waktu_sewa');
             $table->date('tgl_sewa');
             $table->integer('hrg_sewa');
-            $table->string('status');
             $table->timestamps();
         });
     }
-    
+
 
     /**
      * Reverse the migrations.

@@ -23,7 +23,7 @@ class User extends Authenticatable
         'password',
     ];
 
-    /**
+     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
@@ -40,6 +40,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
      /**
@@ -51,6 +52,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Sewa::class, 'user_id');
     }
+
+
+    // Iuser terhubung dengan User, dimana satu Iuser hanya punya 1 User
+    public function iuser(): HasOne
+    {
+        return $this->hasOne(Iuser::class, 'iuser_id');
+    }
+
 
 
 }

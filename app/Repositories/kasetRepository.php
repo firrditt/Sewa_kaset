@@ -1,39 +1,57 @@
 <?php
 
-namespace App\Repositories\V1\Residensial;
+namespace App\Repositories;
 
 use App\Models\Kaset;
+use App\Models\Sewa;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class KasetRepository {
 
-    // public function getKaset(): array
-    // {
-    //     $data = Kaset::Latest()
-    //             ->paginate(5);
-    //     return [200, $data];
-    // }
+    // ga ada kaset service dan controller, disatukan ke sewa service karena jadi satu kesatuan fitur
 
-    public function getAll()
+    // ini contoh update yang digabung pada sewa service
+    public function getKasetById($id)
     {
-        return Kaset::all();
+        return Kaset::where('id', $id)->first();
     }
 
-    public function getById($id)
+    // ini contoh update yang dipisah
+    public function updateKaset(int $id, string $status){
+        DB::beginTransaction();
+        try {
+            $tersedia = $this->getKasetById($id);
+            $tersedia->update([
+                'status_kaset' => $status
+            ]);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            throw $e;
+        }
+        DB::commit();
+
+        return $tersedia;
+}
+
+    public function getAllAvailableKaset()
     {
-        return Kaset::findOrFail($id);
+        return Kaset::where('status_kaset', 'available')->get();
+    }
+
+    public function getAvailKasetById($id) {
+
+        $tersedia = Kaset::where('id', $id)
+                            ->where('status_kaset', 'available')
+                            ->first();
+        return $tersedia;
+    }
+
+    public function notAvailableKaset()
+    {
+        return Kaset::where('status_kaset', 'not_available')->get();
     }
 
 
-    public function update($id, array $attributes)
-    {
-        $film = Kaset::findOrFail($id);
-        $film->update($attributes);
-        return $film;
-    }
-
-    public function delete($id)
-    {
-        Kaset::destroy($id);
-    }
 }

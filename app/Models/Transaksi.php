@@ -10,4 +10,15 @@ class Transaksi extends Model
     use HasFactory;
 
     protected $table = "transaksi";
+
+    protected $fillable = [
+        'tgl_bayar',
+        'jum_bayar',
+        'status_transaksi',
+    ];
+
+    public function sewa(): BelongsTo
+    {
+        return $this->belongsTo(Sewa::class, 'sewa_id');
+    }
 }

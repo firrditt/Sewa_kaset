@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->date('tgl_bayar');
             $table->double('jum_bayar');
+            $table->string('status_transaksi');
             $table->timestamps();
         });
     }

@@ -19,16 +19,17 @@ class Sewa extends Model
     protected $table = "sewa";
 
     protected $fillable = [
-        'waktu_sewa',
         'tgl_sewa',
         'hrg_sewa',
-        'status',
+        'user_id',
+        'kaset_id',
+        'upload'
     ];
 
     /**
      * Sewa belongs to user
      *
-     * @return  HasMany
+     * @return  BelongsTo
      */
     public function user(): BelongsTo
     {
