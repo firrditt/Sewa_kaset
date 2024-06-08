@@ -26,7 +26,7 @@ Route::group(['prefix' => 'auth'], function () {
       Route::post('/sewa/{id}', [SewaController::class, 'buktiSewa']);
     //   Route::post('/sewa1/{id}', [SewaController::class, 'buktiSewa1']);
       Route::put('/kaset/{id}', [SewaController::class, 'updateStatKaset']);
-      Route::post('/upload', [SewaController::class, 'uploadSewa']);
+      Route::post('/upload/{id}', [SewaController::class, 'uploadSewa']);
 
     });
 });

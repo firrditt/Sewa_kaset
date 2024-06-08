@@ -48,7 +48,7 @@ class SewaRepository
 {
     DB::beginTransaction();
     try {
-        $sewa = $this->getSewaById($id);
+        $sewa = $this->getSewaByID($id);
         $sewa->update([
             'upload' => $path
         ]);

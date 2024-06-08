@@ -9,6 +9,7 @@ use App\Repositories\SewaRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\UploadedFile;
 
 class SewaService
 {
@@ -95,13 +96,14 @@ class SewaService
         ];
     }
 
-    public function doUpload($id, UploadedFile $file, UploadRequest $request) {
+    public function doUpload($id, UploadRequest $request) {
         DB::beginTransaction();
         try {
-            //  pengecekan id
-            $sewa = $this->sewaRepository->getSewaById($id);
-            // ini gabisa dipake, kalo ga declare variabel dimana memanggil function yang terdapat id kaset
-            if(!$sewa){
+
+            $idSewa = $this->sewaRepository->getSewaById($id);
+
+            // ini dicek id sewa nya ada atau tidak
+            if(!$idSewa){
                 return (object) [
                     'statusCode' => Response::HTTP_BAD_REQUEST,
                     'code' => 'Sewa_not_available',
@@ -109,8 +111,9 @@ class SewaService
                 ];
             }
 
-            // validasi dari request, terus masuk ke folder public
-            $path = $file->store($request->picture, 'public');
+            // path menggunakan file kemudian di store dengan folder picture di lokal public
+            $path = $request->file('picture')->store('public');
+            //  update setelah id ditemukan
             $sewa = $this->sewaRepository->updateUpload($id, $path);
         } catch (\Throwable $e) {
             DB::rollBack();

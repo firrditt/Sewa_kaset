@@ -8,6 +8,7 @@ use App\Http\Resources\KasetResource;
 use App\Services\SewaService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Http\UploadedFile;
 
 class SewaController extends Controller
 {
@@ -59,8 +60,8 @@ class SewaController extends Controller
             ], 400);
     }
 
-    public function uploadSewa ($id, UploadRequest $request, UploadedFile $file) {
-        $result = $this->sewaService->doUpload($id, $file, $request);
+    public function uploadSewa ($id, UploadRequest $request) {
+        $result = $this->sewaService->doUpload($id, $request);
         if($result->code == 'update_success') {
             return response()->json([
                 "code" => 200,  // Contoh kode aman
